@@ -4,12 +4,19 @@ import useDeck from '../../hooks/useDeck'
 import { BoardContainer } from '../../styles/board'
 
 const Board: FC = () => {
-  const { deck } = useDeck()
+  const { deck, cardsFaceUp, handleFlip } = useDeck()
+
+  const disableOnClick = cardsFaceUp.length > 1
 
   return (
     <BoardContainer>
       {deck.map(card => (
-        <Card key={card.id} {...card} />
+        <Card
+          key={card.id}
+          handleSelectedCard={handleFlip}
+          disabled={disableOnClick}
+          { ...card }
+        />
       ))}
     </BoardContainer>
   )
