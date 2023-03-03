@@ -13,7 +13,6 @@ const BoardControllers: FC = () => {
     setGameOver(false)
   }
 
-  console.log("GAME OVER!!  ===> ", gameOver)
   return (
     <BoardControllersContainer>
       Board Controllers {moves}
