@@ -1,17 +1,20 @@
 import { useEffect, useState } from 'react'
+import { shallow } from 'zustand/shallow'
+import useDeckStore from '../stores/useDeckStore'
+import useBoardStore from '../stores/useBoardStore'
 import DeckEntity from '../entities/deck'
 import ValidateCards from '../entities/validateCards'
 import { CardProps } from '../entities/card'
 
-const mainSourceDeck = new DeckEntity()
-
 const useDeck = () => {
-  const [deck, setDeck] = useState(mainSourceDeck.deck)
-  const [cardsFaceUp, setCardsFaceUp] = useState<CardProps[] | []>([])
+  const { deck, setDeck, cardsFaceUp, setCardsFaceUp } = useDeckStore(state => state, shallow)
+  const { incrementMoves, setGameOver, gameOver } = useBoardStore()
 
   useEffect(() => {
     handleFlippedCardsValidations()
-  }, [cardsFaceUp])
+
+    if (isGameOver()) setGameOver(true)
+  }, [deck, cardsFaceUp])
 
   const handleFlippedCardsValidations = async () => {
     if (cardsFaceUp.length < 2) return
@@ -22,6 +25,8 @@ const useDeck = () => {
     } else {
       await flipCardsFaceDown()
     }
+
+    incrementMoves()
   }
 
   const handleFlip = (card: CardProps) => {
@@ -37,7 +42,7 @@ const useDeck = () => {
     newDeck[cardIndex] =  selectedCard
 
     setDeck(newDeck)
-    setCardsFaceUp(prevcardsFaceUp => ([...prevcardsFaceUp, selectedCard]))
+    setCardsFaceUp([...cardsFaceUp, selectedCard])
   }
 
   const flipCardsFaceDown = () => {
@@ -50,18 +55,16 @@ const useDeck = () => {
     setTimeout(() => {
       const [cardIndex1, cardIndex2] = cardsFaceUp.map(({ id }) => getCardIndex(id!))
 
-      setDeck((prevDeck) => {
-        const updatedDeck = [...prevDeck]
-        const selectedCard1 = deck[cardIndex1]
-        const selectedCard2 = deck.at(cardIndex1)
+      const deckCopy = [...deck]
+      const selectedCard1 = deck[cardIndex1]
+      const selectedCard2 = deck.at(cardIndex1)
 
-        updatedDeck[cardIndex1] = { ...selectedCard1, isFaceUp: !selectedCard1.isFaceUp }
-        updatedDeck[cardIndex2] = { ...prevDeck[cardIndex2], isFaceUp: !deck[cardIndex2].isFaceUp }
+      deck[cardIndex1] = { ...selectedCard1, isFaceUp: !selectedCard1.isFaceUp }
+      deck[cardIndex2] = { ...deckCopy[cardIndex2], isFaceUp: !deck[cardIndex2].isFaceUp }
 
-        resolve('success')
-        return updatedDeck
-      })
-    }, 1500)
+      resolve('success')
+      return deckCopy
+  }, 1500)
   )
 
   const handleGuessedCards = () => {
@@ -71,13 +74,13 @@ const useDeck = () => {
     if (cardIndex1 && cardIndex2) {
       newDeck[cardIndex1] = { ...deck[cardIndex1], guessed: !deck[cardIndex1].guessed }
       newDeck[cardIndex2] = { ...deck[cardIndex2], guessed: !deck[cardIndex2].guessed }
+
       setDeck(newDeck)
     }
   }
 
-  const resetCardsFaceUp = () => {
+  const resetCardsFaceUp = () =>
     setCardsFaceUp([])
-  }
 
   const getCardsFaceUp = (): CardProps[] | [] =>
     deck.filter(cards => cards.isFaceUp)
@@ -95,10 +98,13 @@ const useDeck = () => {
     return validateCards.arePairs()
   }
 
+  const isGameOver = (): boolean =>
+    getCardsFaceUp().length === deck.length
+
   return {
     deck,
     cardsFaceUp,
-    handleFlip
+    handleFlip,
   }
 }
 
