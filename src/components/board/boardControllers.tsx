@@ -14,9 +14,15 @@ const BoardControllers: FC = () => {
   }
 
   return (
-    <BoardControllersContainer>
-      Board Controllers {moves}
-      {gameOver && (<button onClick={handleOnclick}>Reiniciar tablero</button>)}
+    <BoardControllersContainer disabled={gameOver} >
+      Movimientos: {moves}
+      <button
+        className='reset-board-button'
+        onClick={handleOnclick}
+        disabled={!gameOver}
+      >
+        Reiniciar tablero
+      </button>
     </BoardControllersContainer>
   )
 }
