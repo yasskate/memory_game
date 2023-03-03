@@ -6,8 +6,6 @@ export const AppContainer = styled.div`
   flex-direction: column;
   width: 100%;
 
-  background-color: green;
-
   @media(min-width: 982px) {
     width: 65%;
   }
