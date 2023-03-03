@@ -2,9 +2,12 @@ import styled from 'styled-components'
 
 export const AppContainer = styled.div`
   display: flex;
-  align-items: stretch;
   justify-content: center;
-  min-height: 100vh;
-  width: 100vw;
+  flex-direction: column;
+  width: 100%;
+
+  @media(min-width: 982px) {
+    width: 65%;
+  }
 `
 

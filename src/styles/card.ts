@@ -2,20 +2,22 @@ import styled from 'styled-components'
 
 export const CardContainer = styled.div`
   display: flex;
+  background: transparent;
   justify-content: center;
   align-items: center;
   flex: 1;
-  margin: 0.5em;
-  height: 20%;
-  width: 25%;
-
-  :hover {
-    opacity: 0.5;
-  }
+  padding: 0.5em;
+  width: 100%;
 
   .card-image {
-    height: 160px;
-    width: 120px;
+    height: 10em;
+    width: 7.5em;
+  }
+
+  .card-button {
+    :hover {
+      opacity: 0.7;
+      }
   }
  `
 

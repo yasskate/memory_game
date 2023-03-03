@@ -5,16 +5,14 @@ import { createGlobalStyle } from "styled-components"
     margin: 0;
     padding: 0;
     outline:0;
-    flex: 1;
-    width: 100%;
-    height: 100%;
     box-sizing:border-box;
     font-family: 'Open Sans', sans-serif; 
-    background-color: #242424;
   }
 
   #root {
-    margin:0 auto;
+    display: flex;
+    flex: 1;
+    justify-content: center;
     font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
     line-height: 1.5;
     font-weight: 400;
@@ -31,11 +29,11 @@ import { createGlobalStyle } from "styled-components"
   }
 
   body {
-    margin: 0;
     display: flex;
-    place-items: center;
-    min-width: 320px;
-    min-height: 100vh;
+    width: 100%;
+    height: 100%;
+    flex: 1;
+    background-color: #242424;
   }
 `
 
