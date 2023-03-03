@@ -17,7 +17,7 @@ const Card: FC<CardFCProps> = props => {
 
   return (
     <CardContainer>
-      <button onClick={handleOnclick} disabled={disabled}>
+      <button className='card-button' onClick={handleOnclick} disabled={disabled}>
         <img className='card-image' src={isFaceUp ? image : coverImage} alt='tsdaf' />
       </button>
     </CardContainer>
