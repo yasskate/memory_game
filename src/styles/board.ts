@@ -1,9 +1,16 @@
 import styled from 'styled-components'
 
 export const BoardContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  width: 70%;
+  width: 100%;
+
+  .deck-wrapper {
+    background-color: yellow;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+  }
+`
+
+export const BoardControllersContainer = styled.div`
+  background-color: purple;
 `
