@@ -1,4 +1,5 @@
 import coverImage from '../assets/cards/cover.png'
+import { getRandomUniqueId } from '../utils'
 
 export interface CardProps {
   id?: number;
@@ -6,6 +7,7 @@ export interface CardProps {
   image: string;
   guessed: boolean;
   coverImage?: string;
+  isFaceUp?: boolean;
 }
 
 class Card {
@@ -14,13 +16,15 @@ class Card {
   image: string
   guessed: boolean
   coverImage: string
+  isFaceUp: boolean
 
   constructor({ cardId, image, guessed }: CardProps) {
-    this.id = Math.floor(Math.random() * 9999) + 1
+    this.id = getRandomUniqueId()
     this.cardId = cardId
     this.image = image
     this.guessed = guessed
     this.coverImage = coverImage
+    this.isFaceUp = false
   }
 }
 
