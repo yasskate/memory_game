@@ -5,19 +5,20 @@ import { BoardContainer } from '../../styles/board'
 
 const Board: FC = () => {
   const { deck, cardsFaceUp, handleFlip } = useDeck()
-
   const disableOnClick = cardsFaceUp.length > 1
 
   return (
     <BoardContainer>
-      {deck.map(card => (
-        <Card
-          key={card.id}
-          handleSelectedCard={handleFlip}
-          disabled={disableOnClick}
-          { ...card }
-        />
-      ))}
+      <div className='deck-wrapper'>
+        {deck.map(card => (
+          <Card
+            key={card.id}
+            handleSelectedCard={handleFlip}
+            disabled={disableOnClick}
+            { ...card }
+          />
+         ))}
+      </div>
     </BoardContainer>
   )
 }
