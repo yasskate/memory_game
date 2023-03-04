@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import Board from './components/board/board'
 import BoardControllers from './components/board/boardControllers'
 import { AppContainer } from './styles/app'

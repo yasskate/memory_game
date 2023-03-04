@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react'
+import React, { FC, useEffect } from 'react'
 import useBoardStore, { useBoardStoreProps } from '../../stores/useBoardStore'
 import { BoardControllersContainer } from '../../styles/board'
 import useDeckStore from '../../stores/useDeckStore'
@@ -15,9 +15,10 @@ const BoardControllers: FC = () => {
 
   return (
     <BoardControllersContainer disabled={gameOver} >
-      Movimientos: {moves}
+      Movimientos: <p data-testid="moves">{moves}</p>
       <button
         className='reset-board-button'
+        data-testid='reset-board-button'
         onClick={handleOnclick}
         disabled={!gameOver}
       >

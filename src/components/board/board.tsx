@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import React, { FC, useState } from 'react'
 import Card from '../card/card'
 import useDeck from '../../hooks/useDeck'
 import { BoardContainer } from '../../styles/board'
@@ -12,6 +12,7 @@ const Board: FC = () => {
       <div className='deck-wrapper'>
         {deck.map(card => (
           <Card
+            id={card.id}
             key={card.id}
             handleSelectedCard={handleFlip}
             disabled={disableOnClick}
