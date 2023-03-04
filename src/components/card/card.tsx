@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import React, { FC } from 'react'
 import { CardProps } from '../../entities/card'
 import { CardContainer } from '../../styles/card'
 
@@ -17,7 +17,12 @@ const Card: FC<CardFCProps> = props => {
 
   return (
     <CardContainer>
-      <button className='card-button' onClick={handleOnclick} disabled={disabled}>
+      <button
+        disabled={disabled}
+        onClick={handleOnclick}
+        className='card-button'
+        data-testid='card-button'
+      >
         <img className='card-image' src={isFaceUp ? image : coverImage} alt='tsdaf' />
       </button>
     </CardContainer>
