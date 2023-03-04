@@ -15,7 +15,7 @@ const BoardControllers: FC = () => {
 
   return (
     <BoardControllersContainer disabled={gameOver} >
-      Movimientos: <p data-testid="moves">{moves}</p>
+      <p>Movimientos: <span data-testid="moves">{moves}</span></p>
       <button
         className='reset-board-button'
         data-testid='reset-board-button'
