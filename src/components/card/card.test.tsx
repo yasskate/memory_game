@@ -17,16 +17,16 @@ describe('Card', () => {
     const user = userEvent.setup()
     const onSelect = vi.fn()
 
-    render(<Card card={card} disabled={false} onSelect={onSelect} />)
+    render(<Card card={card} disabled={false} labels={{ hidden: 'Hidden card', revealed: 'Revealed card' }} onSelect={onSelect} />)
 
-    await user.click(screen.getByRole('button', { name: 'Carta oculta' }))
+    await user.click(screen.getByRole('button', { name: 'Hidden card' }))
 
     expect(onSelect).toHaveBeenCalledWith('card-1-0')
   })
 
   it('does not allow interaction while the board is resolving a turn', () => {
-    render(<Card card={card} disabled onSelect={vi.fn()} />)
+    render(<Card card={card} disabled labels={{ hidden: 'Hidden card', revealed: 'Revealed card' }} onSelect={vi.fn()} />)
 
-    expect(screen.getByRole('button', { name: 'Carta oculta' })).toBeDisabled()
+    expect(screen.getByRole('button', { name: 'Hidden card' })).toBeDisabled()
   })
 })

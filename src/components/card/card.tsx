@@ -5,13 +5,14 @@ import { CardContainer } from '../../styles/card'
 interface CardProps {
   card: GameCard
   disabled: boolean
+  labels: { hidden: string; revealed: string }
   onSelect: (cardId: string) => void
 }
 
-const Card = ({ card, disabled, onSelect }: CardProps) => {
+const Card = ({ card, disabled, labels, onSelect }: CardProps) => {
   const isFaceUp = card.isFaceUp || card.isMatched
   const isDisabled = disabled || card.isMatched
-  const label = isFaceUp ? 'Carta descubierta' : 'Carta oculta'
+  const label = isFaceUp ? labels.revealed : labels.hidden
 
   return (
     <CardContainer>

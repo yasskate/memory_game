@@ -11,6 +11,30 @@ export const AppContainer = styled.main`
     text-align: center;
   }
 
+  .language-switch {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.35rem;
+    margin-bottom: clamp(1.25rem, 4vw, 2rem);
+
+    button {
+      padding: 0.4rem 0.7rem;
+      color: #c6c0b8;
+      background: transparent;
+      border: 1px solid #55565a;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    button[aria-pressed='true'] {
+      color: #1d1c1a;
+      background: #f9ce73;
+      border-color: #f9ce73;
+    }
+  }
+
   .eyebrow {
     margin-bottom: 0.25rem;
     color: #f9ce73;
