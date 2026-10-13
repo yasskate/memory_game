@@ -2,6 +2,8 @@
 
 Un juego de memoria hecho con React, TypeScript y Vite. Encuentra las nueve parejas con el menor número de movimientos.
 
+La interfaz está disponible en español e inglés; usa el selector de idioma en la parte superior del juego.
+
 ## Requisitos
 
 - Node `22.13.0` (gestionado por asdf en `.tool-versions`)
