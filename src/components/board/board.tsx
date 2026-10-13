@@ -5,20 +5,23 @@ import { BoardContainer } from '../../styles/board'
 
 interface BoardProps {
   cards: GameCard[]
+  label: string
   onSelectCard: (cardId: string) => void
   status: GameStatus
+  cardLabels: { hidden: string; revealed: string }
 }
 
-const Board = ({ cards, onSelectCard, status }: BoardProps) => {
+const Board = ({ cards, label, onSelectCard, status, cardLabels }: BoardProps) => {
   const isResolvingTurn = status === 'resolving'
 
   return (
-    <BoardContainer aria-label='Tablero de memorama'>
+    <BoardContainer aria-label={label}>
       <div className='deck-wrapper'>
         {cards.map(card => (
           <Card
             key={card.id}
             card={card}
+            labels={cardLabels}
             disabled={isResolvingTurn}
             onSelect={onSelectCard}
           />
