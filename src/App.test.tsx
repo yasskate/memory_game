@@ -1,25 +1,13 @@
-import React from 'react'
-import { act, render, screen, fireEvent, waitFor } from '@testing-library/react'
-// import BoardEntity, { BoardProps } from '../../entities/board'
+import { render, screen } from '@testing-library/react'
+import { describe, expect, it } from 'vitest'
 import App from './App'
 
-describe("Test app component", () => {
-  it("should render the title correctly", async () => {
+describe('App', () => {
+  it('renders a complete, playable board', () => {
     render(<App />)
 
-    const titleText = screen.getByText('Memorama challenge')
-    expect(titleText.textContent).toBe("Memorama challenge")
-  })
-
-  it("should render the default moves value", async () => {
-    render(<App />)
-
-    const cardButtons = screen.getAllByTestId('card-button')
-    const titleText = screen.getByTestId('moves')
-
-    await waitFor(() => {
-      expect(titleText.textContent).toBe("0")
-    })
+    expect(screen.getByRole('heading', { name: 'Memorama' })).toBeInTheDocument()
+    expect(screen.getAllByRole('button', { name: 'Carta oculta' })).toHaveLength(18)
+    expect(screen.getByTestId('moves')).toHaveTextContent('0')
   })
 })
-
