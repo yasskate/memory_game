@@ -1,28 +1,19 @@
-import React, { FC, useEffect } from 'react'
-import useBoardStore, { useBoardStoreProps } from '../../stores/useBoardStore'
 import { BoardControllersContainer } from '../../styles/board'
-import useDeckStore from '../../stores/useDeckStore'
 
-const BoardControllers: FC = () => {
-  const { resetDeck } = useDeckStore()
-  const { moves, resetBoard, gameOver, setGameOver } = useBoardStore()
+interface BoardControllersProps {
+  moves: number
+  onRestart: () => void
+}
 
-  const handleOnclick = () => {
-    resetBoard()
-    resetDeck()
-    setGameOver(false)
-  }
-
+const BoardControllers = ({ moves, onRestart }: BoardControllersProps) => {
   return (
-    <BoardControllersContainer disabled={gameOver} >
-      <p>Movimientos: <span data-testid="moves">{moves}</span></p>
+    <BoardControllersContainer>
+      <p>Movimientos: <span data-testid='moves'>{moves}</span></p>
       <button
         className='reset-board-button'
-        data-testid='reset-board-button'
-        onClick={handleOnclick}
-        disabled={!gameOver}
+        onClick={onRestart}
       >
-        Reiniciar tablero
+        Nueva partida
       </button>
     </BoardControllersContainer>
   )

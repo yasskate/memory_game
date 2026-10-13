@@ -1,22 +1,26 @@
-import React, { FC, useState } from 'react'
+import { memo } from 'react'
 import Card from '../card/card'
-import useDeck from '../../hooks/useDeck'
+import type { GameCard, GameStatus } from '../../game/types'
 import { BoardContainer } from '../../styles/board'
 
-const Board: FC = () => {
-  const { deck, cardsFaceUp, handleFlip } = useDeck()
-  const disableOnClick = cardsFaceUp.length > 1
+interface BoardProps {
+  cards: GameCard[]
+  onSelectCard: (cardId: string) => void
+  status: GameStatus
+}
+
+const Board = ({ cards, onSelectCard, status }: BoardProps) => {
+  const isResolvingTurn = status === 'resolving'
 
   return (
-    <BoardContainer>
+    <BoardContainer aria-label='Tablero de memorama'>
       <div className='deck-wrapper'>
-        {deck.map(card => (
+        {cards.map(card => (
           <Card
-            id={card.id}
             key={card.id}
-            handleSelectedCard={handleFlip}
-            disabled={disableOnClick}
-            { ...card }
+            card={card}
+            disabled={isResolvingTurn}
+            onSelect={onSelectCard}
           />
          ))}
       </div>
@@ -24,5 +28,5 @@ const Board: FC = () => {
   )
 }
 
-export default Board
+export default memo(Board)
 
