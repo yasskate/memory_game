@@ -36,7 +36,7 @@ corepack yarn verify
 - `src/hooks/useGame.ts`: coordina el retraso de cartas no emparejadas, limpia el temporizador al reiniciar y guarda el progreso.
 - `src/utils/progressStorage.ts`: lee y guarda en `localStorage` el nivel y los récords, tolerando datos corruptos o almacenamiento bloqueado.
 - `src/components/`: UI accesible del tablero y los controles.
-- `src/styles/`: estilos responsive. En móvil y tablet, cuatro columnas en todos los niveles; en pantallas anchas, el tablero siempre tiene cuatro filas (4, 6 u 8 columnas).
+- `src/styles/`: estilos responsive. En móvil y tablet, cuatro columnas en todos los niveles; en pantallas anchas, seis columnas en fácil y medio, y ocho en difícil.
 - `src/assets/cards/`: caras de las cartas en WebP de 250 × 324. `design/cards/` contiene la herramienta para generar cartas nuevas.
 
 ## Deploy en Vercel

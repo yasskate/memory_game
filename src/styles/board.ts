@@ -20,8 +20,9 @@ export const BoardContainer = styled.section`
     border-radius: 1.25rem;
   }
 
-  /* Wider screens keep every difficulty at four rows: 4 x 4, 6 x 4 and 8 x 4. */
+  /* Wider screens: easy and medium use six columns (6 x 3 and 6 x 4), hard uses eight (8 x 4). */
   @media (min-width: 48rem) {
+    .deck-wrapper[data-difficulty='easy'],
     .deck-wrapper[data-difficulty='medium'] {
       grid-template-columns: repeat(6, minmax(0, 1fr));
       max-width: 66rem;

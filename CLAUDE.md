@@ -48,6 +48,6 @@ Game state stays local to `useGame`; don't introduce global state (context/store
 - Only `src/utils/progressStorage.ts` touches `localStorage`; keep it tolerant of blocked storage and corrupted data.
 - New UI strings must be added to both languages in `translations.ts` (the `TranslationStrings` interface enforces this).
 - Card controls must stay keyboard-accessible with visible focus styles.
-- Styles live in `src/styles/` as styled-components. Below 48rem the board is four columns at every difficulty; keep cards at least 44px wide on a 320px screen. Wider screens keep four rows: medium uses six columns from 48rem, hard eight from 64rem.
+- Styles live in `src/styles/` as styled-components. Below 48rem the board is four columns at every difficulty; keep cards at least 44px wide on a 320px screen. Wider screens: easy and medium use six columns from 48rem, hard eight from 64rem.
 - New card faces go in `src/assets/cards/` as numbered 250 x 324 WebP files; adding one makes it available to the deck automatically.
 - No visual redesigns unless explicitly requested; responsive and accessibility improvements are welcome.
