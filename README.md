@@ -1,6 +1,8 @@
 # Memorama
 
-Un juego de memoria hecho con React, TypeScript y Vite. Encuentra las nueve parejas con el menor número de movimientos.
+Un juego de memoria hecho con React, TypeScript y Vite. Encuentra todas las parejas con el menor número de movimientos.
+
+Hay tres niveles: fácil (8 parejas), medio (12) y difícil (16). Cada partida elige animales al azar entre las 16 cartas disponibles. El juego recuerda en el navegador el último nivel elegido y tu mejor partida de cada nivel, y al ganar muestra tus movimientos junto a tu récord.
 
 La interfaz está disponible en español e inglés; usa el selector de idioma en la parte superior del juego.
 
@@ -30,10 +32,12 @@ corepack yarn verify
 
 ## Arquitectura
 
-- `src/game/`: reducer puro, creación/barajado de cartas y reglas testeadas.
-- `src/hooks/useGame.ts`: coordina el retraso de cartas no emparejadas y limpia el temporizador al reiniciar.
+- `src/game/`: reducer puro, niveles de dificultad, creación/barajado de cartas y reglas testeadas.
+- `src/hooks/useGame.ts`: coordina el retraso de cartas no emparejadas, limpia el temporizador al reiniciar y guarda el progreso.
+- `src/utils/progressStorage.ts`: lee y guarda en `localStorage` el nivel y los récords, tolerando datos corruptos o almacenamiento bloqueado.
 - `src/components/`: UI accesible del tablero y los controles.
-- `src/styles/`: estilos responsive; cuatro columnas en todos los tamaños, con cartas que se adaptan al ancho de la pantalla.
+- `src/styles/`: estilos responsive. En móvil y tablet, cuatro columnas en todos los niveles; en pantallas anchas, el tablero siempre tiene cuatro filas (4, 6 u 8 columnas).
+- `src/assets/cards/`: caras de las cartas en WebP de 250 × 324. `design/cards/` contiene la herramienta para generar cartas nuevas.
 
 ## Deploy en Vercel
 
