@@ -1,4 +1,4 @@
-import coverImage from '../assets/cards/cover.png'
+import coverImage from '../assets/cards/cover.webp'
 import { images } from '../utils/images'
 import type { GameCard } from './types'
 
@@ -15,8 +15,16 @@ export const shuffle = <T,>(items: T[], random: Random = Math.random): T[] => {
   return shuffled
 }
 
-export const createDeck = (random: Random = Math.random): GameCard[] => {
-  const cards = Object.entries(images).flatMap(([pairId, image]) =>
+export const AVAILABLE_PAIRS = Object.keys(images).length
+
+/** Picks `pairCount` random images and returns two shuffled cards for each. */
+export const createDeck = (pairCount: number, random: Random = Math.random): GameCard[] => {
+  if (!Number.isInteger(pairCount) || pairCount < 1 || pairCount > AVAILABLE_PAIRS) {
+    throw new RangeError(`pairCount must be an integer between 1 and ${AVAILABLE_PAIRS}, received ${pairCount}`)
+  }
+
+  const chosenImages = shuffle(Object.entries(images), random).slice(0, pairCount)
+  const cards = chosenImages.flatMap(([pairId, image]) =>
     [0, 1].map(copy => ({
       id: `card-${pairId}-${copy}`,
       pairId: Number(pairId),

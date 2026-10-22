@@ -1,21 +1,38 @@
 import { useEffect, useState } from 'react'
 import Board from './components/board/board'
 import BoardControllers from './components/board/boardControllers'
+import WinDialog from './components/winDialog/winDialog'
 import useGame from './hooks/useGame'
 import { translations, type Language } from './i18n/translations'
 import { AppContainer } from './styles/app'
 
 function App() {
-  const { cards, moves, restart, selectCard, status } = useGame()
-  const isGameOver = status === 'won'
+  const {
+    bestMoves,
+    cards,
+    changeDifficulty,
+    difficulty,
+    isNewRecord,
+    moves,
+    restart,
+    selectCard,
+    status,
+  } = useGame()
   const [language, setLanguage] = useState<Language>('es')
+  const [isWinDialogDismissed, setWinDialogDismissed] = useState(false)
   const strings = translations[language]
+  const bestForDifficulty = bestMoves[difficulty]
 
   useEffect(() => {
     document.documentElement.lang = language
     document.title = strings.documentTitle
     document.querySelector('meta[name="description"]')?.setAttribute('content', strings.description)
   }, [language, strings])
+
+  // Each new game can show its own win dialog again.
+  useEffect(() => {
+    if (status !== 'won') setWinDialogDismissed(false)
+  }, [status])
 
   return (
     <AppContainer lang={language}>
@@ -39,23 +56,40 @@ function App() {
 
       <BoardControllers
         moves={moves}
-        movesLabel={strings.movesLabel}
-        newGameLabel={strings.newGame}
+        bestMoves={bestForDifficulty}
+        difficulty={difficulty}
+        labels={{
+          moves: strings.movesLabel,
+          best: strings.bestLabel,
+          noBest: strings.noBest,
+          newGame: strings.newGame,
+          difficulty: strings.difficultyLabel,
+          difficulties: strings.difficulties,
+        }}
+        onChangeDifficulty={changeDifficulty}
         onRestart={restart}
       />
 
-      {isGameOver && (
-        <p className='win-message' role='status'>
-          {strings.winMessage(moves)}
-        </p>
-      )}
-
       <Board
         cards={cards}
+        difficulty={difficulty}
         label={strings.boardLabel}
         onSelectCard={selectCard}
         status={status}
         cardLabels={{ hidden: strings.hiddenCard, revealed: strings.revealedCard }}
+      />
+
+      <WinDialog
+        open={status === 'won' && !isWinDialogDismissed}
+        title={strings.winTitle}
+        message={strings.winMessage(moves)}
+        difficulty={strings.winDifficulty(strings.difficulties[difficulty])}
+        bestResult={strings.bestResult(bestForDifficulty ?? moves)}
+        newRecordLabel={isNewRecord ? strings.newRecord : null}
+        playAgainLabel={strings.playAgain}
+        viewBoardLabel={strings.viewBoard}
+        onPlayAgain={restart}
+        onClose={() => setWinDialogDismissed(true)}
       />
     </AppContainer>
   )

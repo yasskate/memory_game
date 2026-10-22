@@ -6,8 +6,8 @@ import Card from './card'
 const card = {
   id: 'card-1-0',
   pairId: 1,
-  image: 'image.png',
-  coverImage: 'cover.png',
+  image: 'image.webp',
+  coverImage: 'cover.webp',
   isFaceUp: false,
   isMatched: false,
 }
@@ -37,7 +37,7 @@ describe('Card', () => {
     const imageSources = () => Array.from(container.querySelectorAll('img')).map(image => image.getAttribute('src'))
 
     expect(inner).toHaveAttribute('data-face-up', 'false')
-    expect(imageSources()).toEqual(['cover.png', 'image.png'])
+    expect(imageSources()).toEqual(['cover.webp', 'image.webp'])
 
     rerender(<Card card={{ ...card, isFaceUp: true }} disabled={false} labels={labels} onSelect={vi.fn()} />)
     expect(inner).toHaveAttribute('data-face-up', 'true')
@@ -45,7 +45,7 @@ describe('Card', () => {
 
     rerender(<Card card={card} disabled={false} labels={labels} onSelect={vi.fn()} />)
     expect(inner).toHaveAttribute('data-face-up', 'false')
-    expect(imageSources()).toEqual(['cover.png', 'image.png'])
+    expect(imageSources()).toEqual(['cover.webp', 'image.webp'])
   })
 
   it('stays face up once matched', () => {
