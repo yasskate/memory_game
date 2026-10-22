@@ -7,8 +7,10 @@ export const BoardContainer = styled.section`
 
   .deck-wrapper {
     display: grid;
-    gap: clamp(0.45rem, 1.4vw, 0.9rem);
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(0.4rem, 1.4vw, 0.9rem);
+    /* Four columns at every width; cards scale with the viewport.
+       On a 375px phone each card is about 73 x 97px, above the 44px touch target minimum. */
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     max-width: 48rem;
     width: 100%;
     margin: clamp(1.5rem, 4vw, 2.5rem) 0;
@@ -16,18 +18,6 @@ export const BoardContainer = styled.section`
     background: rgba(255, 247, 231, 0.05);
     border: 1px solid rgba(255, 247, 231, 0.1);
     border-radius: 1.25rem;
-  }
-
-  @media (min-width: 30rem) {
-    .deck-wrapper {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-  }
-
-  @media (min-width: 48rem) {
-    .deck-wrapper {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
   }
 `
 

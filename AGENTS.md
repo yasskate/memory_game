@@ -11,7 +11,7 @@
 - `src/game/` contains the deterministic game state machine and its unit tests. Keep its reducer pure: no timers, mutable state, or browser APIs.
 - `src/hooks/useGame.ts` owns the mismatch timeout and must clean it up on reset or unmount.
 - `src/components/` renders the game. Keep card controls keyboard-accessible and preserve visible focus styles.
-- `src/styles/` contains styled-components. The board must support two columns on narrow screens, three on medium screens, and four on desktop.
+- `src/styles/` contains styled-components. The board uses four columns at every width, with cards scaling to the viewport; keep cards at least 44px wide on a 320px screen.
 
 ## Change expectations
 

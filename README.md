@@ -33,7 +33,7 @@ corepack yarn verify
 - `src/game/`: reducer puro, creación/barajado de cartas y reglas testeadas.
 - `src/hooks/useGame.ts`: coordina el retraso de cartas no emparejadas y limpia el temporizador al reiniciar.
 - `src/components/`: UI accesible del tablero y los controles.
-- `src/styles/`: estilos responsive; dos columnas en móvil, tres en tablet y cuatro en escritorio.
+- `src/styles/`: estilos responsive; cuatro columnas en todos los tamaños, con cartas que se adaptan al ancho de la pantalla.
 
 ## Deploy en Vercel
 

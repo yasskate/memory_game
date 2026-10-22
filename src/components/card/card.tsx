@@ -23,11 +23,18 @@ const Card = ({ card, disabled, labels, onSelect }: CardProps) => {
         onClick={() => onSelect(card.id)}
         className='card-button'
       >
-        <img className='card-image' src={isFaceUp ? card.image : card.coverImage} alt='' />
+        {/* Both faces stay mounted so the rotation can animate in either direction. */}
+        <span className='card-inner' data-face-up={isFaceUp}>
+          <span className='card-face card-face--back'>
+            <img className='card-image' src={card.coverImage} alt='' />
+          </span>
+          <span className='card-face card-face--front'>
+            <img className='card-image' src={card.image} alt='' />
+          </span>
+        </span>
       </button>
     </CardContainer>
   )
 }
 
 export default memo(Card)
-

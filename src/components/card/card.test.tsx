@@ -29,4 +29,31 @@ describe('Card', () => {
 
     expect(screen.getByRole('button', { name: 'Hidden card' })).toBeDisabled()
   })
+
+  it('keeps both faces mounted and flips when the card is revealed or covered again', () => {
+    const labels = { hidden: 'Hidden card', revealed: 'Revealed card' }
+    const { container, rerender } = render(<Card card={card} disabled={false} labels={labels} onSelect={vi.fn()} />)
+    const inner = container.querySelector('.card-inner')
+    const imageSources = () => Array.from(container.querySelectorAll('img')).map(image => image.getAttribute('src'))
+
+    expect(inner).toHaveAttribute('data-face-up', 'false')
+    expect(imageSources()).toEqual(['cover.png', 'image.png'])
+
+    rerender(<Card card={{ ...card, isFaceUp: true }} disabled={false} labels={labels} onSelect={vi.fn()} />)
+    expect(inner).toHaveAttribute('data-face-up', 'true')
+    expect(screen.getByRole('button', { name: 'Revealed card' })).toBeInTheDocument()
+
+    rerender(<Card card={card} disabled={false} labels={labels} onSelect={vi.fn()} />)
+    expect(inner).toHaveAttribute('data-face-up', 'false')
+    expect(imageSources()).toEqual(['cover.png', 'image.png'])
+  })
+
+  it('stays face up once matched', () => {
+    const { container } = render(
+      <Card card={{ ...card, isMatched: true }} disabled={false} labels={{ hidden: 'Hidden card', revealed: 'Revealed card' }} onSelect={vi.fn()} />,
+    )
+
+    expect(container.querySelector('.card-inner')).toHaveAttribute('data-face-up', 'true')
+    expect(screen.getByRole('button', { name: 'Revealed card' })).toBeDisabled()
+  })
 })
