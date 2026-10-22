@@ -1,16 +1,30 @@
 import { createDeck } from './deck'
-import type { GameAction, GameState } from './types'
+import { createEmptyBestMoves, DEFAULT_DIFFICULTY, PAIRS_BY_DIFFICULTY } from './difficulty'
+import type { BestMoves, Difficulty, GameAction, GameCard, GameState } from './types'
 
-export const createGameState = (cards = createDeck()): GameState => ({
+interface GameStateOptions {
+  difficulty?: Difficulty
+  bestMoves?: BestMoves
+  cards?: GameCard[]
+}
+
+export const createGameState = ({
+  difficulty = DEFAULT_DIFFICULTY,
+  bestMoves = createEmptyBestMoves(),
+  cards = createDeck(PAIRS_BY_DIFFICULTY[difficulty]),
+}: GameStateOptions = {}): GameState => ({
   cards,
   moves: 0,
   selectedCardIds: [],
   status: 'playing',
+  difficulty,
+  bestMoves,
+  isNewRecord: false,
 })
 
 export const gameReducer = (state: GameState, action: GameAction): GameState => {
-  if (action.type === 'restart') {
-    return createGameState()
+  if (action.type === 'new-game') {
+    return createGameState({ difficulty: action.difficulty, bestMoves: state.bestMoves, cards: action.cards })
   }
 
   if (action.type === 'resolve-mismatch') {
@@ -46,11 +60,13 @@ export const gameReducer = (state: GameState, action: GameAction): GameState => 
 
   if (!firstCard || !secondCard) return state
 
+  const moves = state.moves + 1
+
   if (firstCard.pairId !== secondCard.pairId) {
     return {
       ...state,
       cards: cardsWithSelection,
-      moves: state.moves + 1,
+      moves,
       selectedCardIds,
       status: 'resolving',
     }
@@ -59,13 +75,21 @@ export const gameReducer = (state: GameState, action: GameAction): GameState => 
   const matchedCards = cardsWithSelection.map(card =>
     selectedCardIds.includes(card.id) ? { ...card, isMatched: true } : card,
   )
-  const status = matchedCards.every(card => card.isMatched) ? 'won' : 'playing'
+
+  if (!matchedCards.every(card => card.isMatched)) {
+    return { ...state, cards: matchedCards, moves, selectedCardIds: [] }
+  }
+
+  const previousBest = state.bestMoves[state.difficulty]
+  const isNewRecord = previousBest === null || moves < previousBest
 
   return {
     ...state,
     cards: matchedCards,
-    moves: state.moves + 1,
+    moves,
     selectedCardIds: [],
-    status,
+    status: 'won',
+    bestMoves: isNewRecord ? { ...state.bestMoves, [state.difficulty]: moves } : state.bestMoves,
+    isNewRecord,
   }
 }

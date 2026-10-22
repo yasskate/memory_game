@@ -58,12 +58,5 @@ export const AppContainer = styled.main`
     color: #c6c0b8;
     max-width: 32rem;
   }
-
-  .win-message {
-    margin: 1.25rem auto -0.5rem;
-    color: #fff7e7;
-    font-weight: 700;
-    text-align: center;
-  }
 `
 

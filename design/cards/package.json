@@ -1,0 +1,12 @@
+{
+  "name": "memory-game-card-art",
+  "private": true,
+  "type": "module",
+  "description": "Builds game-ready card PNGs from the high-resolution masters. Separate from the game so sharp stays out of the app dependencies.",
+  "scripts": {
+    "build": "node build.mjs"
+  },
+  "dependencies": {
+    "sharp": "^0.34.5"
+  }
+}
